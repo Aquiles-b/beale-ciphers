@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "lista.h"
+#include "lista_lib.h"
 
 int main()
 {

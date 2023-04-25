@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "lista.h"
+#include "lista_lib.h"
 
 /* Retorna um ponteiro para uma struct chaveLista contendo a chave passada.*/
 struct chaveLista *criaChaveLista(wchar_t chave)
