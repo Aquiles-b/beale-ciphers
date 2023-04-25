@@ -1,11 +1,13 @@
 CC=gcc
 CFLAGS= -g -Wall -std=c99
 
-lista: lista.c
-	$(CC) lista.c -o lista $(CFLAGS)
+OBJS= lista.o
 
-run: lista
-	./lista
+beale: $(OBJS) beale.c
+	$(CC) beale.c -o beale $(OBJS) $(CFLAGS)
+
+lista.o: lista.c
+	$(CC) -c lista.c $(CFLAGS)
 
 clean:
-	rm -f lista
+	rm -f $(OBJS) beale
