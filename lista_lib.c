@@ -42,9 +42,9 @@ int buscaBinaria(int x, int lista[], int a, int b)
     if (a > b)
         return b + 1;
     int meio = (a + b) / 2;
-    if (lista[meio] > x)
-        return buscaBinaria(x, lista, a, meio - 1);
     if (lista[meio] < x)
+        return buscaBinaria(x, lista, a, meio - 1);
+    if (lista[meio] > x)
         return buscaBinaria(x, lista, meio + 1, b);
 
     return meio;
