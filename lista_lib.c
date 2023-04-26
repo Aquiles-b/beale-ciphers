@@ -70,24 +70,24 @@ void ordenaUltimoItem(struct chaveLista *cl)
         troca(lista + i, lista + i - 1);
 }
 
-/* Aumenta o tamanho da lista somando TAM_LISTA com o valor atual total.*/
+/* Aumenta o tamanho da lista somando TAM_LISTA com o valor atual total.
+ * Retorna 0 se der certo e 1 caso contrario.*/
 int aumentaTamLista(struct chaveLista *cl)
 {
     cl->tamTotal += TAM_LISTA;
     cl->lista = realloc(cl->lista, sizeof(int) * cl->tamTotal);
     if (cl->lista != NULL)
-        return 0;
+        return 1;
 
-    return 1;
+    return 0;
 }
 
-/* Adiciona um item na lista de forma ordenada crescente.*/
+/* Adiciona um item na lista de forma ordenada crescente.
+* Retorna 0 se der certo e 1 caso contrario.*/
 int addItemLista(struct chaveLista *cl, int valor)
 {
-    int status;
     if (cl->tam == cl->tamTotal) {
-        status = aumentaTamLista(cl);
-        if (status == 1)
+        if(!aumentaTamLista(cl))
             return 1;
     }
 
