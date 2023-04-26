@@ -12,8 +12,8 @@ decod: $(OBJS)
 cifras: cifrasBeale_lib.o lista_lib.o
 	$(CC) -o cifras cifrasBeale_lib.o lista_lib.o
 
-run: cifras
-	./cifras
+run: decod
+	./decod
 
 %_lib.o: %_lib.c
 	$(CC) -c $^ $(CFLAGS)

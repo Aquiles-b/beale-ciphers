@@ -187,7 +187,7 @@ struct cifrasBeale *leArqCifras(FILE *arqCifras)
         getc(arqCifras);
     }
     if (status != 0){
-        /* destroiCifras(cb); */
+        destroiCifras(cb);
         return NULL;
     }
 

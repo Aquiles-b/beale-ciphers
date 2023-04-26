@@ -37,7 +37,7 @@ void ordenaUltimoItemCifra(struct cifrasBeale *cb);
  * Retorna 0 caso tudo de certo e 1 caso contrario.*/
 int adicionaLetra(struct cifrasBeale *cb, wchar_t letra, int posi);
 
-/* Monta o sistema de cifras a partir de um texto no strem @texto.
+/* Monta o sistema de cifras a partir de um texto no stream @texto.
  * Retorna um ponteiro para struct cifrasBeale.*/
 struct cifrasBeale *montaChavesTxt(FILE *texto);
 
