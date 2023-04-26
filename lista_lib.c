@@ -77,9 +77,11 @@ int aumentaTamLista(struct chaveLista *cl)
     cl->tamTotal += TAM_LISTA;
     cl->lista = realloc(cl->lista, sizeof(int) * cl->tamTotal);
     if (cl->lista != NULL)
-        return 1;
+        return 0;
 
-    return 0;
+    printf ("Erro: Impossivel aumentar tamanho da lista.\n");
+
+    return 1;
 }
 
 /* Adiciona um item na lista de forma ordenada crescente.
@@ -87,10 +89,9 @@ int aumentaTamLista(struct chaveLista *cl)
 int addItemLista(struct chaveLista *cl, int valor)
 {
     if (cl->tam == cl->tamTotal) {
-        if(!aumentaTamLista(cl))
+        if(aumentaTamLista(cl))
             return 1;
     }
-
     cl->lista[cl->tam] = valor;
     cl->tam++;
     ordenaUltimoItem(cl);
@@ -101,8 +102,8 @@ int addItemLista(struct chaveLista *cl, int valor)
 /* Imprime a lista.*/
 void imprimeLista(struct chaveLista *cl)
 {
-    for (int i = 0; i < cl->tam; i++)
+    for (int i = 0; i < cl->tam-1; i++)
         printf("%d ", cl->lista[i]);
 
-    printf("\n");
+    printf("%d\n", cl->lista[cl->tam-1]);
 }
