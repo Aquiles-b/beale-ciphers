@@ -9,8 +9,14 @@ beale: $(OBJS) beale.c
 decod: $(OBJS)
 	$(CC) -o decod $(OBJS) $(CFLAGS)
 
+cifras: cifrasBeale_lib.o lista_lib.o
+	$(CC) -o cifras cifrasBeale_lib.o lista_lib.o
+
+run: cifras
+	./cifras
+
 %_lib.o: %_lib.c
 	$(CC) -c $^ $(CFLAGS)
 
 clean:
-	rm -f *_lib.o beale
+	rm -f *_lib.o beale cifras
