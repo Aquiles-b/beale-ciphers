@@ -3,10 +3,6 @@
 #include "cifrasBeale_lib.h"
 #include <wchar.h>
 
-/* Retorna a letra correspondente ao numero como base no sistema de cifras.
- * Caso nao exista retorna o caractere '?'.*/
-wchar_t buscaCifra(struct cifrasBeale *cb, int num);
-
 /* Decodifica para @txtOut o texto em @txtCod com base no sistema passado em
  * @cb */
 void decodifica(struct cifrasBeale *cb, FILE *txtCod, FILE *txtOut);

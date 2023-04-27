@@ -1,20 +1,6 @@
 #include <stdio.h>
 #include "decodifica_lib.h"
 
-/* Retorna a letra correspondente ao numero como base no sistema de cifras.
- * Caso nao exista retorna o caractere '?'.*/
-wchar_t buscaCifra(struct cifrasBeale *cb, int num)
-{
-    int i = 0;
-    while (i < cb->tam) {
-        if (buscaElemento(cb->cifras[i], num))
-            return cb->cifras[i]->chave;
-        i++;
-    }
-
-    return L'?';
-}
-
 /* Decodifica para @txtOut o texto em @txtCod com base no sistema passado em
  * @cb */
 void decodifica(struct cifrasBeale *cb, FILE *txtCod, FILE *txtOut)

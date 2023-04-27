@@ -212,6 +212,20 @@ struct cifrasBeale **destroiCifras(struct cifrasBeale *cb)
     return NULL;
 }
 
+/* Retorna a letra correspondente ao numero como base no sistema de cifras.
+ * Caso nao exista retorna o caractere '?'.*/
+wchar_t buscaCifra(struct cifrasBeale *cb, int num)
+{
+    int i = 0;
+    while (i < cb->tam) {
+        if (buscaElemento(cb->cifras[i], num))
+            return cb->cifras[i]->chave;
+        i++;
+    }
+
+    return L'?';
+}
+
 /* Retorna a chave da cifra passada.*/
 wchar_t chaveCifra(struct chaveLista *cl)
 {
