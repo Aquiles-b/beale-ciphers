@@ -1,6 +1,7 @@
 #include "cifrasBeale_lib.h"
 #include "lista_lib.h"
 #include <stdlib.h>
+#include <wchar.h>
 #include <wctype.h>
 
 /* Cria o sistema de cifras e retorna ponteiro para struct cifrasBeale.*/
@@ -135,10 +136,8 @@ struct cifrasBeale *montaChavesTxt(FILE *texto)
         status = adicionaLetra(cifras, letra, i);
         i++;
     }
-    fclose(texto);
-
     if (status != 0){
-        /* destroiCifras(cifras); */
+        destroiCifras(cifras);
         return NULL;
     }
 
@@ -172,7 +171,6 @@ int montaLinhaCifra(FILE *arqCifras, struct cifrasBeale *cb, wchar_t letra)
 struct cifrasBeale *leArqCifras(FILE *arqCifras)
 {
     rewind(arqCifras);
-    unsigned int posi;
     wchar_t chave;
     int status = 0;
     struct cifrasBeale *cb = criaCifras();
@@ -212,4 +210,21 @@ struct cifrasBeale **destroiCifras(struct cifrasBeale *cb)
     free(cb);
 
     return NULL;
+}
+
+/* Retorna a chave da cifra passada.*/
+wchar_t chaveCifra(struct chaveLista *cl)
+{
+    return cl->chave;
+}
+
+/* Passa o proximo elemento da cifra em @valor.
+ * Retorna 1 se deu certo e 0 caso contrario.*/
+int iteraListaCifra(struct chaveLista *cl, int *valor)
+{
+    if (iteraLista(cl, valor)) {
+        return 1;
+    }
+
+    return 0;
 }

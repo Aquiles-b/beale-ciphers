@@ -6,6 +6,7 @@ struct chaveLista {
     int *lista;
     int tam;
     int tamTotal;
+    int posix;
 };
 
 /* Retorna um ponteiro para uma struct chaveLista contendo a chave passada.*/
@@ -32,6 +33,13 @@ int aumentaTamLista(struct chaveLista *cl);
 
 /* Adiciona um item na lista de forma ordenada crescente.*/
 int addItemLista(struct chaveLista *cl, int valor);
+
+/* Reseta o iterador.*/
+void rstIteradorLista(struct chaveLista *cl);
+
+/* Passa o valor do proximo elemento da lista em @valorAtual.
+ * Retorna 1 se deu certo e 0 caso contrario.*/
+int iteraLista(struct chaveLista *cl, int *valorAtual);
 
 /* Imprime a lista.*/
 void imprimeLista(struct chaveLista *cl);

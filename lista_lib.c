@@ -9,6 +9,7 @@ struct chaveLista *criaChaveLista(wchar_t chave)
     if (aux != NULL) {
         aux->tamTotal = TAM_LISTA;
         aux->tam = 0;
+        aux->posix = 0;
         aux->lista = malloc(sizeof(int) * TAM_LISTA);
         aux->chave = chave;
     } else {
@@ -103,11 +104,30 @@ int addItemLista(struct chaveLista *cl, int valor)
     return 0;
 }
 
+/* Reseta o iterador.*/
+void rstIteradorLista(struct chaveLista *cl)
+{
+    cl->posix = 0;
+}
+
+/* Passa o valor do proximo elemento da lista em @valorAtual.
+ * Retorna 1 se deu certo e 0 caso contrario.*/
+int iteraLista(struct chaveLista *cl, int *valorAtual)
+{
+    if (cl->posix == cl->tam)
+        return 0;
+    *valorAtual = cl->lista[cl->posix];
+    cl->posix++;
+
+    return 1;
+}
+
 /* Imprime a lista.*/
 void imprimeLista(struct chaveLista *cl)
 {
-    for (int i = 0; i < cl->tam-1; i++)
-        printf("%d ", cl->lista[i]);
+    int num;
+    while (iteraLista(cl, &num))
+        printf ("%d ", num);
 
-    printf("%d\n", cl->lista[cl->tam-1]);
+    printf ("\n");
 }

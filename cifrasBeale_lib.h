@@ -54,3 +54,10 @@ void imprimeTodasCifras(struct cifrasBeale *cb);
 
 /* Desaloca toda memoria de uma struct cifrasBeale.*/;
 struct cifrasBeale **destroiCifras(struct cifrasBeale *cb);
+
+/* Retorna a chave da cifra passada.*/
+wchar_t chaveCifra(struct chaveLista *cl);
+
+/* Passa o proximo elemento da cifra em @valor.
+ * Retorna 1 se deu certo e 0 caso contrario.*/
+int iteraListaCifra(struct chaveLista *cl, int *valor);
