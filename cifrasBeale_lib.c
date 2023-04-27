@@ -1,5 +1,4 @@
 #include "cifrasBeale_lib.h"
-#include "lista_lib.h"
 #include <stdlib.h>
 #include <wchar.h>
 #include <wctype.h>
@@ -70,10 +69,9 @@ int buscaBinariaCifra(wchar_t x, struct chaveLista **listas, int a, int b, int *
         return buscaBinariaCifra(x, listas, meio + 1, b, sts);
 
     return buscaBinariaCifra(x, listas, a, meio - 1, sts);
-
 }
 
-/* Retorna 1 se o elemento existir na lista e 0 caso contrario.*/
+/* Retorna 1 se a letra ja existir no sistema e 0 caso contrario.*/
 int letraExisteCifra(struct cifrasBeale *cb, wchar_t letra)
 {
     if (cb->tam == 0)
@@ -96,7 +94,7 @@ void ordenaUltimoItemCifra(struct cifrasBeale *cb)
 }
 
 /* Adiciona uma letra para o sistema de cifras. A adicao pode ser
- * so sobre uma cifra ja existente ou sobre a criacao de uma nova cifra.
+ * sobre uma cifra ja existente ou sobre a criacao de uma nova cifra.
  * Retorna 0 caso tudo de certo e 1 caso contrario.*/
 int adicionaLetra(struct cifrasBeale *cb, wchar_t letra, int posi)
 {
@@ -226,6 +224,22 @@ wchar_t buscaCifra(struct cifrasBeale *cb, int num)
     return L'?';
 }
 
+/* Retorna um numero aleatorio da lista da cifra com a chave igual a @letra.*/
+int aleatNumCifra(struct cifrasBeale *cb, wchar_t letra)
+{
+    int num, tam, posi, alea, sts = 1;
+    posi = buscaBinariaCifra(letra, cb->cifras, 0, cb->tam-1, &sts);
+
+    if (sts == 0)
+        return -2;
+
+    tam = cb->cifras[posi]->tam;
+    alea = rand() % tam;
+    num = cb->cifras[posi]->lista[alea];
+
+    return num;
+}
+
 /* Retorna a chave da cifra passada.*/
 wchar_t chaveCifra(struct chaveLista *cl)
 {
@@ -241,4 +255,19 @@ int iteraListaCifra(struct chaveLista *cl, int *valor)
     }
 
     return 0;
+}
+
+/* Escreve as cifras no arquivo @arq.*/
+void escreveCifras(struct cifrasBeale *cb, FILE *arq)
+{
+    int i = 0, valor;
+    while (i < cb->tam) {
+        fprintf(arq ,"%lc: ", chaveCifra(cb->cifras[i]));
+        while (iteraListaCifra(cb->cifras[i], &valor))
+            fprintf(arq, "%d ", valor);
+        fseek(arq, -sizeof(char), SEEK_CUR);
+        fprintf(arq, "\n");
+        rstIteradorLista(cb->cifras[i]);
+        i++;
+    }
 }

@@ -126,8 +126,10 @@ int iteraLista(struct chaveLista *cl, int *valorAtual)
 void imprimeLista(struct chaveLista *cl)
 {
     int num;
+    rstIteradorLista(cl);
     while (iteraLista(cl, &num))
         printf ("%d ", num);
+    rstIteradorLista(cl);
 
     printf ("\n");
 }

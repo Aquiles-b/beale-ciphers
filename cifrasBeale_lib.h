@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "lista_lib.h"
 #include <wchar.h>
 #define TAM_CIFRAS 10
 
@@ -26,7 +27,7 @@ void trocaCifras(struct chaveLista **a, struct chaveLista **b);
  * num vetor de inicio @a e fim @b */
 int buscaBinariaCifra(wchar_t x, struct chaveLista **listas, int a, int b, int *sts);
 
-/* Retorna 1 se o elemento existir na lista e 0 caso contrario.*/
+/* Retorna 1 se a letra ja existir no sistema e 0 caso contrario.*/
 int letraExisteCifra(struct cifrasBeale *cb, wchar_t letra);
 
 /* Coloca o ultimo elemento do sistema de cifras na posicao correta.*/
@@ -62,6 +63,13 @@ struct cifrasBeale **destroiCifras(struct cifrasBeale *cb);
 /* Retorna a chave da cifra passada.*/
 wchar_t chaveCifra(struct chaveLista *cl);
 
+/* Retorna um numero aleatorio da lista da cifra com a chave igual a @letra.*/
+int aleatNumCifra(struct cifrasBeale *cb, wchar_t letra);
+
 /* Passa o proximo elemento da cifra em @valor.
  * Retorna 1 se deu certo e 0 caso contrario.*/
 int iteraListaCifra(struct chaveLista *cl, int *valor);
+
+/* Escreve as cifras no arquivo @arq.*/
+void escreveCifras(struct cifrasBeale *cb, FILE *arq);
+

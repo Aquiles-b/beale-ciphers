@@ -19,32 +19,15 @@ void decodifica(struct cifrasBeale *cb, FILE *txtCod, FILE *txtOut)
     fputc(L'\n', txtOut);
 }
 
-/* Escreve as cifras no arquivo @arq.*/
-void escreveCifras(struct cifrasBeale *cb, FILE *arq)
-{
-    int i = 0, valor;
-    while (i < cb->tam) {
-        fprintf(arq ,"%lc: ", chaveCifra(cb->cifras[i]));
-        while (iteraListaCifra(cb->cifras[i], &valor))
-            fprintf(arq, "%d ", valor);
-        fseek(arq, -sizeof(char), SEEK_CUR);
-        fprintf(arq, "\n");
-        i++;
-    }
-}
-
 /* Decodifica para @txtOut o texto em @txtCod com base em @textoBase.
  * Salva o arquivo de cifras gerado caso @arqOutCifras nao seja NULL.*/
-int decodComTxt(FILE *txtCod, FILE *txtOut, FILE *textoBase, FILE *arqOutCifras)
+int decodComTxt(FILE *txtCod, FILE *txtOut, FILE *textoBase)
 {
     struct cifrasBeale *cb = montaChavesTxt(textoBase);
     if (cb == NULL)
         return 1;
 
     decodifica(cb, txtCod, txtOut);
-    if (arqOutCifras != NULL)
-        escreveCifras(cb, arqOutCifras);
-
     destroiCifras(cb);
 
     return 0;

@@ -1,19 +1,19 @@
 CC=gcc
 CFLAGS= -g -Wall -std=c99
 
-OBJS= decodifica_lib.o cifrasBeale_lib.o lista_lib.o files_lib.o
+OBJS= codifica_lib.o cifrasBeale_lib.o lista_lib.o files_lib.o
 
 beale: $(OBJS) beale.c
 	$(CC) beale.c -o beale $(OBJS) $(CFLAGS)
 
-decod: $(OBJS)
-	$(CC) -o decod $(OBJS) $(CFLAGS)
+codi: $(OBJS)
+	$(CC) -o codi $(OBJS) $(CFLAGS)
 
 cifras: cifrasBeale_lib.o lista_lib.o
 	$(CC) -o cifras cifrasBeale_lib.o lista_lib.o
 
-run: decod
-	./decod
+run: codi
+	./codi
 
 %_lib.o: %_lib.c
 	$(CC) -c $^ $(CFLAGS)
