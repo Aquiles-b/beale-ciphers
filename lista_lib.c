@@ -37,15 +37,17 @@ void troca(int *a, int *b)
 
 /* Retorna a posição de inserção de um elemento @x
  * num vetor de inicio @a e fim @b */
-int buscaBinaria(int x, int lista[], int a, int b)
+int buscaBinariaLista(int x, int lista[], int a, int b, int *sts)
 {
-    if (a > b)
+    if (a > b){
+        *sts = 0;
         return b + 1;
+    }
     int meio = (a + b) / 2;
     if (lista[meio] < x)
-        return buscaBinaria(x, lista, a, meio - 1);
+        return buscaBinariaLista(x, lista, a, meio - 1, sts);
     if (lista[meio] > x)
-        return buscaBinaria(x, lista, meio + 1, b);
+        return buscaBinariaLista(x, lista, meio + 1, b, sts);
 
     return meio;
 }
@@ -53,19 +55,21 @@ int buscaBinaria(int x, int lista[], int a, int b)
 /* Retorna 1 se o elemento existir na lista e 0 caso contrario.*/
 int buscaElemento(struct chaveLista *cl, int valor)
 {
+    int status = 1;
     if (cl->tam == 0)
         return 0;
-    int status = buscaBinaria(valor, cl->lista, 0, cl->tam-1);
+    buscaBinariaLista(valor, cl->lista, 0, cl->tam-1, &status);
 
-    return status != cl->tam;
+    return status;
 }
 
 /* Coloca o elemento na posicao correta.*/
 void ordenaUltimoItem(struct chaveLista *cl)
 {
+    int sts;
     int tam = cl->tam;
     int *lista = cl->lista;
-    int p = buscaBinaria(lista[tam-1], lista, 0, tam-1);
+    int p = buscaBinariaLista(lista[tam-1], lista, 0, tam-1, &sts);
     for (int i = tam-1; i > p; i--)
         troca(lista + i, lista + i - 1);
 }

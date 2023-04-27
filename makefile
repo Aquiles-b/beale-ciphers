@@ -19,4 +19,4 @@ run: decod
 	$(CC) -c $^ $(CFLAGS)
 
 clean:
-	rm -f *_lib.o beale cifras
+	rm -f *_lib.o beale cifras decod

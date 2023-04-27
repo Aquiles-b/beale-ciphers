@@ -19,7 +19,7 @@ void troca(int *a, int *b);
 
 /* Retorna a posição de inserção de um elemento @x
  * num vetor de inicio @a e fim @b */
-int buscaBinaria(int x, int lista[], int a, int b);
+int buscaBinariaLista(int x, int lista[], int a, int b, int *sts);
 
 /* Retorna 1 se o elemento existir na lista e 0 caso contrario.*/
 int buscaElemento(struct chaveLista *cl, int valor);
