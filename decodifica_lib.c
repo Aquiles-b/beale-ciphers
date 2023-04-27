@@ -1,9 +1,5 @@
-#include "lista_lib.h"
-#include "files_lib.h"
-#include "cifrasBeale_lib.h"
 #include <stdio.h>
-#include <locale.h>
-#include <wchar.h>
+#include "decodifica_lib.h"
 
 /* Retorna a letra correspondente ao numero como base no sistema de cifras.
  * Caso nao exista retorna o caractere '?'.*/
@@ -37,6 +33,7 @@ void decodifica(struct cifrasBeale *cb, FILE *txtCod, FILE *txtOut)
     fputc(L'\n', txtOut);
 }
 
+/* Escreve as cifras no arquivo @arq.*/
 void escreveCifras(struct cifrasBeale *cb, FILE *arq)
 {
     int i = 0, valor;
@@ -48,7 +45,6 @@ void escreveCifras(struct cifrasBeale *cb, FILE *arq)
         fprintf(arq, "\n");
         i++;
     }
-
 }
 
 /* Decodifica para @txtOut o texto em @txtCod com base em @textoBase.
@@ -78,23 +74,6 @@ int decodComCifras(FILE *txtCod, FILE *txtOut, FILE *arqCifras)
 
     decodifica(cb, txtCod, txtOut);
     destroiCifras(cb);
-
-    return 0;
-}
-
-int main()
-{
-    setlocale(LC_ALL, "");
-    FILE *txtCod = fopen("txtCod.txt", "r");
-    FILE *txtOut = fopen("saida.txt", "w");
-    FILE *textoBase = fopen("livroTeste.txt", "r");
-    FILE *arqCifras = fopen("arqCifras.txt", "w");
-
-    decodComTxt(txtCod, txtOut, textoBase, arqCifras);
-
-    fclose(txtCod);
-    fclose(txtOut);
-    fclose(textoBase);
 
     return 0;
 }
