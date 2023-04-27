@@ -11,12 +11,15 @@ void decodifica(struct cifrasBeale *cb, FILE *txtCod, FILE *txtOut)
     while (fscanf(txtCod, "%d", &num) != -1){
         if (num == -1) {
             fputc(L' ', txtOut);
+        } else if (num == -2){
+            fputc(L'\n', txtOut);
+        } else if (num == -3){
+            fputc(L'?', txtOut);
         } else {
             chave = buscaCifra(cb, num);
             fputc(chave, txtOut);
         }
     }
-    fputc(L'\n', txtOut);
 }
 
 /* Decodifica para @txtOut o texto em @txtCod com base em @textoBase.

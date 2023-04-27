@@ -231,7 +231,7 @@ int aleatNumCifra(struct cifrasBeale *cb, wchar_t letra)
     posi = buscaBinariaCifra(letra, cb->cifras, 0, cb->tam-1, &sts);
 
     if (sts == 0)
-        return -2;
+        return -3;
 
     tam = cb->cifras[posi]->tam;
     alea = rand() % tam;

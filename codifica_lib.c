@@ -7,25 +7,33 @@
 
 /* Codifica para @txtOut o texto em @txtCod com base no sistema passado em
  * @cb */
-void codifica(struct cifrasBeale *cb, FILE *txtCod, FILE *txtOut);
+void codifica(struct cifrasBeale *cb, FILE *txtCod, FILE *txtOut)
+{
+    wchar_t letra;
+
+    letra = getwc(txtCod);
+    while(!feof(txtCod)){
+        if (letra == L' ')
+            fprintf(txtOut, "-1 ");
+        else if (letra == L'\n')
+            fprintf(txtOut, "-2\n");
+        else
+            fprintf(txtOut, "%d ", aleatNumCifra(cb, letra));
+    letra = getwc(txtCod);
+    }
+}
 
 /* Codifica para @txtOut o texto em @txtCod com base em @textoBase.
  * Salva o arquivo de cifras gerado caso @arqOutCifras nao seja NULL.*/
 int codificaComTxt(FILE *txtCod, FILE *txtOut, FILE *textoBase, FILE *arqOutCifras)
 {
-    wchar_t letra;
     struct cifrasBeale *cb = montaChavesTxt(textoBase);
     if (cb == NULL)
         return 1;
 
-    imprimeTodasCifras(cb);
-
-    letra = getwc(txtCod);
-    while(!feof(txtCod)){
-        if (letra != L' ' && letra != L'\n')
-            printf ("%d %lc\n", aleatNumCifra(cb, letra), letra);
-    letra = getwc(txtCod);
-    }
+    codifica(cb, txtCod, txtOut);
+    if (arqOutCifras != NULL)
+        escreveCifras(cb, arqOutCifras);
 
     return 0;
 }
@@ -41,8 +49,9 @@ int main()
     FILE *txtCod = fopen("txtCod.txt", "r");
     FILE *txtOut = fopen("txtOut.txt", "w");
     FILE *txtBase = fopen("livroTeste.txt", "r");
+    FILE *cifras = fopen("cifras.txt", "w");
 
-    codificaComTxt(txtCod, txtOut, txtBase, NULL);
+    codificaComTxt(txtCod, txtOut, txtBase, cifras);
 
     fclose(txtCod);
     fclose(txtOut);
