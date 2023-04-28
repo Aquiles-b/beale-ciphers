@@ -1,25 +1,25 @@
 ## Módulos usados: 
 
-- lista_lib:
+- lista_lib:  
     Dicionário com a chave sendo uma letra. Os números na lista são ordenados 
     de forma decrescente.
 
-- cifrasBeale_lib:
+- cifrasBeale_lib:  
     Responsável pela maior parte do código. Esse módulo usa a lista_lib para guardar
     um determinado caractere e todas as posições das palavras que começam com ele,
     criando assim um sistema de cifras armazenado em uma struct, a qual contém
     um vetor de ponteiros para todas as letras do sistema.
 
-- decodifica_lib:
+- decodifica_lib:  
     Usa o módulo cifrasBeale_lib para decodificar um arquivo. Oferece funções para
     decodificar usando um arquivo de cifras ou um livro/texto.
 
-- codifica_lib:
+- codifica_lib:  
     Usa o módulo cifrasBeale_lib para codificar um arquivo. Oferece funções para
     codificar usando um arquivo de cifras ou um livro/texto e também salvar o arquivo
     de cifras gerado quando se usa o livro.
 
-- beale:
+- beale:  
     É a parte principal onde junta tudo e faz a interface com o usuário, tratando
     as entradas e direcionando o fluxo do código.
 
