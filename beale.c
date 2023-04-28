@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <getopt.h>
+#include <locale.h>
 #include <stdlib.h>
 #include "decodifica_lib.h"
 #include "codifica_lib.h"
@@ -188,8 +189,8 @@ int validaOpts(struct entrada *opts)
 
 int main(int argc, char **argv)
 {
+    setlocale(LC_ALL, "");
     struct entrada *opts = trataOpts(argc, argv);
-
     if (!validaOpts(opts)) {
         free(opts);
         return 1;
@@ -199,10 +200,12 @@ int main(int argc, char **argv)
     entrada = fopen(opts->entrada, "r");
     saida = fopen(opts->saida, "w");
 
-    if (opts->book == 1)
+    if (opts->book == 1) {
         livro = fopen(opts->livro, "r");
-    if (opts->cipher == 1)
         cifra = fopen(opts->cifra, "w");
+    } else {
+        cifra = fopen(opts->cifra, "r");
+    }
 
     if (opts->operacao == OP_ENCODE) {
         codificaComTxt(entrada, saida, livro, cifra);
@@ -212,8 +215,11 @@ int main(int argc, char **argv)
         else
             decodComCifras(entrada, saida, cifra);
     }
-
     free(opts);
+    /* fclose(entrada); */
+    /* fclose(saida); */
+    /* fclose(livro); */
+    /* fclose(cifra); */
 
     return 0;
 }
