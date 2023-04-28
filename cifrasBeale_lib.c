@@ -1,6 +1,8 @@
 #include "cifrasBeale_lib.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <wchar.h>
 #include <wctype.h>
 
 /* Cria o sistema de cifras e retorna ponteiro para struct cifrasBeale.*/
@@ -142,19 +144,42 @@ struct cifrasBeale *montaChavesTxt(FILE *texto)
     return cifras;
 }
 
+/* Retorna um ponteiro para uma string contendo os valores da linha atual.*/
+char *leLinha(FILE *arq)
+{
+    int tam = 0;
+    while (fgetc(arq) != '\n')
+        tam++;
+    fseek(arq, -tam, SEEK_CUR);
+    char *str = malloc(sizeof(char) * (tam + 1));
+    str = fgets(str, tam+1, arq);
+    str[strcspn(str, "\n")] = '\0';
+
+    return str;
+}
+
 /* Cria a linha da cifra com seus respectivos codigos de acordo
  * com o stream. Retorna 0 se deu tudo certo e 1 caso contrario.*/
 int montaLinhaCifra(FILE *arqCifras, struct cifrasBeale *cb, wchar_t letra)
 {
     int tam, posi, status = 0;
+    char *linha;
     tam = cb->tam;
+
     if (tam == cb->tamTotal){
         if(aumentaSistemaCifras(cb))
             return 1;
     }
     cb->cifras[tam] = criaChaveLista(letra);
-    while(fscanf(arqCifras, "%d", &posi) == 1 && status == 0)
+    linha = leLinha(arqCifras);
+    char *pt = strtok(linha, " ");
+
+    while (pt != NULL && status == 0) {
+        sscanf(pt, "%d", &posi) ;
         status = addItemLista(cb->cifras[tam], posi);
+        pt = strtok(NULL, " ");
+    }
+    free(linha);
 
     if (status != 0)
         return 1;

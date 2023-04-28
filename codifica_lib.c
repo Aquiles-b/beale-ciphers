@@ -31,6 +31,8 @@ int codificaComTxt(FILE *txtCod, FILE *txtOut, FILE *textoBase, FILE *arqOutCifr
     if (arqOutCifras != NULL)
         escreveCifras(cb, arqOutCifras);
 
+    destroiCifras(cb);
+
     return 0;
 }
 
@@ -43,6 +45,7 @@ int codificaComCifras(FILE *txtCod, FILE *txtOut, FILE *arqCifras)
         return 1;
 
     codifica(cb, txtCod, txtOut);
+    destroiCifras(cb);
 
     return 0;
 }

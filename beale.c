@@ -45,8 +45,8 @@ struct entrada *criaEntradas()
  * para ela.*/
 struct entrada *trataOpts(int argc, char **argv)
 {
-    struct entrada *opts = criaEntradas();
     int option;
+    struct entrada *opts = criaEntradas();
 
     while((option = getopt(argc, argv, "edb:m:o:c:i:")) != -1) {
         switch (option) {
@@ -83,22 +83,6 @@ struct entrada *trataOpts(int argc, char **argv)
     }
 
     return opts;
-}
-
-/* Mosta toda a struct de opcoes.*/
-void mostraOpts(struct entrada *opts)
-{
-    if (opts == NULL)
-        return;
-    printf ("Operacao: %d\n", opts->operacao);
-    printf ("Input: %d\n", opts->input);
-    printf ("Entrada: %s\n", opts->entrada);
-    printf ("Book: %d\n", opts->book);
-    printf ("Livro: %s\n", opts->livro);
-    printf ("Out: %d\n", opts->out);
-    printf ("Saida: %s\n", opts->saida);
-    printf ("Cipher: %d\n", opts->cipher);
-    printf ("Cifra: %s\n", opts->cifra);
 }
 
 /* Retorna 1 se o arquivo e valido e 0 caso contrario.*/
@@ -187,6 +171,36 @@ int validaOpts(struct entrada *opts)
     return sts;
 }
 
+/* Faz a operacao de encode.*/
+void opEncode(struct entrada *opts, FILE *entrada, FILE *saida, FILE *cifra, FILE *livro)
+{
+    livro = fopen(opts->livro, "r");
+    if (opts->cipher == 1)
+        cifra = fopen(opts->cifra, "w");
+    else
+        cifra = NULL;
+
+    codificaComTxt(entrada, saida, livro, cifra);
+    fclose(livro);
+    if (cifra != NULL)
+        fclose(cifra);
+}
+
+/* Faz a operacao de decode.*/
+void opDecode(struct entrada *opts, FILE *entrada, FILE *saida, FILE *cifra, FILE *livro)
+{
+    if (opts->book == 1) {
+        livro = fopen(opts->livro, "r");
+        decodComTxt(entrada, saida, livro);
+        fclose(livro);
+    }
+    else {
+        cifra = fopen(opts->cifra, "r");
+        decodComCifras(entrada, saida, cifra);
+        fclose(cifra);
+    }
+}
+
 int main(int argc, char **argv)
 {
     setlocale(LC_ALL, "");
@@ -195,31 +209,19 @@ int main(int argc, char **argv)
         free(opts);
         return 1;
     }
-    FILE *entrada, *saida, *livro, *cifra = NULL;
 
+    FILE *entrada, *saida, *livro = NULL, *cifra = NULL;
     entrada = fopen(opts->entrada, "r");
     saida = fopen(opts->saida, "w");
 
-    if (opts->book == 1) {
-        livro = fopen(opts->livro, "r");
-        cifra = fopen(opts->cifra, "w");
-    } else {
-        cifra = fopen(opts->cifra, "r");
-    }
+    if (opts->operacao == OP_ENCODE)
+        opEncode(opts, entrada, saida, cifra, livro);
+    else
+        opDecode(opts, entrada, saida, cifra, livro);
 
-    if (opts->operacao == OP_ENCODE) {
-        codificaComTxt(entrada, saida, livro, cifra);
-    } else {
-        if (opts->book == 1)
-            decodComTxt(entrada, saida, livro);
-        else
-            decodComCifras(entrada, saida, cifra);
-    }
     free(opts);
-    /* fclose(entrada); */
-    /* fclose(saida); */
-    /* fclose(livro); */
-    /* fclose(cifra); */
+    fclose(entrada);
+    fclose(saida);
 
     return 0;
 }
