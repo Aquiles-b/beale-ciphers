@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 #include <getopt.h>
 #include <locale.h>
 #include <stdlib.h>
@@ -203,6 +204,7 @@ void opDecode(struct entrada *opts, FILE *entrada, FILE *saida, FILE *cifra, FIL
 
 int main(int argc, char **argv)
 {
+    srand(time(NULL));
     setlocale(LC_ALL, "");
     struct entrada *opts = trataOpts(argc, argv);
     if (!validaOpts(opts)) {
