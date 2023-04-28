@@ -1,5 +1,8 @@
+#ifndef CIFRASBEALE_H
+#define CIFRASBEALE_H
 #include "cifrasBeale_lib.h"
 #include <wchar.h>
+#endif 
 
 /* Decodifica para @txtOut o texto em @txtCod com base no sistema passado em
  * @cb */

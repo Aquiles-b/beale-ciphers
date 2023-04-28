@@ -1,9 +1,5 @@
 #include "cifrasBeale_lib.h"
 #include <stdio.h>
-#include <stdlib.h>
-#include <locale.h>
-#include <time.h>
-#include <wchar.h>
 
 /* Codifica para @txtOut o texto em @txtCod com base no sistema passado em
  * @cb */
@@ -40,22 +36,13 @@ int codificaComTxt(FILE *txtCod, FILE *txtOut, FILE *textoBase, FILE *arqOutCifr
 
 /* Codifica para o stream @txtOut o texto em @txtCod com o sistema de cifras 
  * em @arqCifras.*/
-int codificaComCifras(FILE *txtCod, FILE *txtOut, FILE *arqCifras);
-
-int main()
+int codificaComCifras(FILE *txtCod, FILE *txtOut, FILE *arqCifras)
 {
-    setlocale(LC_ALL, "");
-    srand(time(NULL));
-    FILE *txtCod = fopen("txtCod.txt", "r");
-    FILE *txtOut = fopen("txtOut.txt", "w");
-    FILE *txtBase = fopen("livroTeste.txt", "r");
-    FILE *cifras = fopen("cifras.txt", "w");
+    struct cifrasBeale *cb = leArqCifras(arqCifras);
+    if (cb == NULL)
+        return 1;
 
-    codificaComTxt(txtCod, txtOut, txtBase, cifras);
-
-    fclose(txtCod);
-    fclose(txtOut);
-    fclose(txtBase);
+    codifica(cb, txtCod, txtOut);
 
     return 0;
 }

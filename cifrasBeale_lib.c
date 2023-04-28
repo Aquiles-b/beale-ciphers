@@ -1,6 +1,5 @@
 #include "cifrasBeale_lib.h"
 #include <stdlib.h>
-#include <wchar.h>
 #include <wctype.h>
 
 /* Cria o sistema de cifras e retorna ponteiro para struct cifrasBeale.*/
