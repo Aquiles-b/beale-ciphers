@@ -6,6 +6,7 @@
 #define OP_ENCODE 0
 #define OP_DECODE 1
 
+/* Struct para facilitar a manipulacao das entradas do usuario.*/
 struct entrada {
     short operacao;
     short input;
@@ -18,6 +19,7 @@ struct entrada {
     char *cifra;
 };
 
+/* Aloca e inicia as variaveis da struct com valores basicos.*/
 struct entrada *criaEntradas()
 {
     struct entrada *opts = malloc(sizeof(struct entrada));
@@ -38,6 +40,8 @@ struct entrada *criaEntradas()
     return opts;
 }
 
+/* Passa os dados da entrada para uma struct entrada e retorna um ponteiro
+ * para ela.*/
 struct entrada *trataOpts(int argc, char **argv)
 {
     struct entrada *opts = criaEntradas();
@@ -80,6 +84,7 @@ struct entrada *trataOpts(int argc, char **argv)
     return opts;
 }
 
+/* Mosta toda a struct de opcoes.*/
 void mostraOpts(struct entrada *opts)
 {
     if (opts == NULL)
@@ -109,6 +114,8 @@ int arqValido(char *arq, char *op)
     return sts;
 }
 
+/* Verifica as opcoes especificas para o decode.
+ * Retorna 1 se deu tudo certo e 0 caso contrario.*/
 int verificaOptsDecode(struct entrada *opts)
 {
     if (opts->input == 0 || opts->entrada == NULL) {
@@ -139,6 +146,8 @@ int verificaOptsDecode(struct entrada *opts)
     return 1;
 }
 
+/* Verifica as opcoes especificas para o encode.
+ * Retorna 1 se deu tudo certo e 0 caso contrario.*/
 int verificaOptsEncode(struct entrada *opts)
 {
     if (opts->book == 0 || !arqValido(opts->livro, "r")) {
@@ -161,6 +170,7 @@ int verificaOptsEncode(struct entrada *opts)
     return 1;
 }
 
+/* Retorna 1 se as opcoes estao sendo usadas corretamente e 0 caso contrario.*/
 int validaOpts(struct entrada *opts)
 {
     int sts = 1;
