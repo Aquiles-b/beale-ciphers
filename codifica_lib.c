@@ -1,5 +1,6 @@
 #include "cifrasBeale_lib.h"
 #include <stdio.h>
+#include <wctype.h>
 
 /* Codifica para @txtOut o texto em @txtCod com base no sistema passado em
  * @cb */
@@ -9,6 +10,7 @@ void codifica(struct cifrasBeale *cb, FILE *txtCod, FILE *txtOut)
 
     letra = getwc(txtCod);
     while(!feof(txtCod)){
+        letra = towlower(letra);
         if (letra == L' ')
             fprintf(txtOut, "-1 ");
         else if (letra == L'\n')
